@@ -1,4 +1,4 @@
-name: main
+name: action
 description: Create a custom action:v1
 inputs:
   path_dockerfile:
@@ -15,22 +15,19 @@ inputs:
 runs:
   using: composite
   steps:
-
     - name: Build the Docker image
-      
       run: |
         if [ -z "${{ inputs.tag_name }}" ]; then
-          TAG=$(date +%s)
+          echo TAG=$(date +%s) >> $GITHUB_ENV
         else
-          TAG="${{ inputs.tag_name }}"
-        fi 
-        echo "TAG=$TAG" >> $GITHUB_ENV
+          echo TAG="${{ inputs.tag_name }}" >> $GITHUB_ENV
+        fi
       shell: bash
-    - name: Export the docker image
-      
+ 
+    - name: Docker image
       run: |
         NAME="${{ inputs.image_name }}:$TAG"
-        docker build . --file "${{ inputs.path_dockerfile }}" --tag "$NAME"
+        docker build . --file ${{ inputs.path_dockerfile }} --tag $NAME
         echo "DOCKER_IMAGE_NAME=$NAME" >> $GITHUB_ENV
       shell: bash
       

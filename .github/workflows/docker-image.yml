@@ -1,26 +1,25 @@
 name: Docker Image CI
-
+ 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+ 
 jobs:
-
+ 
   build:
-
+ 
     runs-on: ubuntu-latest
-
+ 
     steps:
     - uses: actions/checkout@v3
     - name: Build Docker image
-    - uses: RafaeLorenzi/academy/.github/actions/docker_build@main
+      uses: xhines/academy/.github/actions/docker_build@main
       with:
         image_name: finalexercise
-        tag_name: latest  
+        tag_name: latest
  
     - name: List Docker images
       run: docker images
-    
     
