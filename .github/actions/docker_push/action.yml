@@ -1,4 +1,4 @@
-name: action push
+name: main
 description: Create a action push
 inputs:
   docker_username:
