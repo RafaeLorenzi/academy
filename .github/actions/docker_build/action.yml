@@ -1,16 +1,39 @@
 name: main
-description: perform-hello
+description: Create a custom action:v1
 inputs:
-   hello-input:
-    description: "hello-world"
+  path_dockerfile:
+    description: "Path to the Dockerfile"
+    required: false
+    default: "Dockerfile"
+  image_name:
+    description: "Name for the generated Docker image"
     required: true
-    default: "default-value"
+  tag_name:
+    description: "Tag to be added to the final image"
+    required: false
+    default: "Dockerfile"
 runs:
   using: composite
   steps:
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag academy:$(date +%s)
       shell: bash
+      run: |
+        if [ -z "${{ inputs.tag_name }}" ]; then
+          TAG=$(date +%s)
+        else
+          TAG="${{ inputs.tag_name }}"
+        fi
+        
+        echo "TAG=$TAG" >> $GITHUB_ENV
+
+    - name: Export the docker image
+      shell: bash
+      run: |
+        NAME="${{ inputs.image_name }}:$TAG"
+        docker build . --file "${{ inputs.path_dockerfile }}" --tag "$NAME"
+        echo "DOCKER_IMAGE_NAME=$NAME" >> $GITHUB_ENV
+      
 
     
   
