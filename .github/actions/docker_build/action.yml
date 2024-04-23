@@ -12,6 +12,8 @@ inputs:
     description: "Tag to be added to the final image"
     required: false
     default: ""
+  
+  
 runs:
   using: composite
   steps:
