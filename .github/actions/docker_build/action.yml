@@ -11,7 +11,7 @@ inputs:
   tag_name:
     description: "Tag to be added to the final image"
     required: false
-    default: "Dockerfile"
+    default: ""
 runs:
   using: composite
   steps:
