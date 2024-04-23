@@ -1,0 +1,15 @@
+name: main
+description: perform-hello
+inputs:
+   hello-input:
+    description: "hello-world"
+    required: true
+    default: "default-value"
+runs:
+  using: composite
+  steps:
+    - run: |
+        echo "Hello World"
+      shell: bash
+
+

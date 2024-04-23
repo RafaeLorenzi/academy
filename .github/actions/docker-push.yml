@@ -14,12 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: github-RafaeLorenzi/github-academy/.github/actions/docker_build@main
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag academy:$(date +%s)
 
-    
     - name: list the docker images
       run: docker images
-
-    
