@@ -13,27 +13,25 @@ inputs:
     required: false
     default: ""
 runs:
- runs:
   using: composite
   steps:
-    - run: |
+
+    - name: Build the Docker image
+      
+      run: |
         if [ -z "${{ inputs.tag_name }}" ]; then
-            echo "TAG=$(date +%s)" >> $GITHUB_ENV
+          TAG=$(date +%s)
         else
-            echo "TAG=${{ inputs.tag_name }}" >> $GITHUB_ENV
-        fi
+          TAG="${{ inputs.tag_name }}"
+        fi 
+        echo "TAG=$TAG" >> $GITHUB_ENV
       shell: bash
-    - run: |
-        if [ -z "${{ inputs.path_dockerfile }}" ]; then
-            echo "DOCKERFILE_PATH=Dockerfile" >> $GITHUB_ENV
-        else
-            echo "DOCKERFILE_PATH=${{ inputs.path_dockerfile }}" >> $GITHUB_ENV
-        fi
-      shell: bash
-    - run: echo "DOCKER_IMAGE_NAME=${{ inputs.image_name }}:$TAG" >> $GITHUB_ENV
-      shell: bash
-    - name: Build docker image
-      run: docker build . --file $DOCKERFILE_PATH --tag $DOCKER_IMAGE_NAME
+    - name: Export the docker image
+      
+      run: |
+        NAME="${{ inputs.image_name }}:$TAG"
+        docker build . --file "${{ inputs.path_dockerfile }}" --tag "$NAME"
+        echo "DOCKER_IMAGE_NAME=$NAME" >> $GITHUB_ENV
       shell: bash
       
 
