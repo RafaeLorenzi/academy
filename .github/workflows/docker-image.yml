@@ -17,6 +17,7 @@ jobs:
     - name: Build Docker image
     - uses: RafaeLorenzi/academy/.github/actions/docker_build@main
       with:
+        image_name: finalexercise
         tag_name: latest  
  
     - name: List Docker images
