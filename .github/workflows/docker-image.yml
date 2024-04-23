@@ -14,12 +14,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Build Docker image
     - uses: RafaeLorenzi/academy/.github/actions/docker_build@main
       with:
         tag_name: latest  
  
     - name: List Docker images
       run: docker images
-    - name: list the docker images
-      run: docker images
+    
     

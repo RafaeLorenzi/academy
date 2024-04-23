@@ -17,22 +17,22 @@ runs:
   steps:
 
     - name: Build the Docker image
-      shell: bash
+      
       run: |
         if [ -z "${{ inputs.tag_name }}" ]; then
           TAG=$(date +%s)
         else
           TAG="${{ inputs.tag_name }}"
-        fi
-        
+        fi 
         echo "TAG=$TAG" >> $GITHUB_ENV
-
-    - name: Export the docker image
       shell: bash
+    - name: Export the docker image
+      
       run: |
         NAME="${{ inputs.image_name }}:$TAG"
         docker build . --file "${{ inputs.path_dockerfile }}" --tag "$NAME"
         echo "DOCKER_IMAGE_NAME=$NAME" >> $GITHUB_ENV
+      shell: bash
       
 
     
