@@ -17,4 +17,7 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag academy:$(date +%s)
 
+    - name: list the docker images
+      run: docker images
+
     
